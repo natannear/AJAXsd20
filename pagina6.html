@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+    </head>
+
+    <body style="background-color:lightgray;">
+
+        <br><br>
+        <div align="center">
+            <p align="center"><h1>FIM!</h1></p><br>
+            <p id="demo"></p>
+        </div>
+        <br><br>
+
+        <script>
+            var V = decodeURIComponent(window.location.search);
+            V = V.substring(1);
+            document.getElementById("demo").innerHTML = `SCORE:${V}`;
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+
+    <body id="body" style="background-color:lightgray;">
+        <style>
+            html *{
+                font-family: Arial;
+            }
+            titulo{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            button{
+                margin: 0px 20px;
+            }
+            .quadro {   
+                border: solid 5px rgb(0, 38, 255);
+                width: 100%;
+                height: 10%;
+                padding-bottom:1%;
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+        </style>
+
+        <div id="titulo" align="center">
+            <h2>Teste seu conhecimento sobre bandeiras</h2>
+        </div>
+        <hr>
+        <div class="quadro" id="content" align="center">
+            <p align="center"><h3>Que bandeira é essa?</h3></p><br>
+            <div>
+                <img height="250" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Flag_of_Quebec.svg/800px-Flag_of_Quebec.svg.png">
+            </div><br>
+            
+            A) FRANÇA<br>
+            B) LOUSIANA<br>
+            C) QUEBÉC<br>
+            D) ESCÓCIA<br>
+
+            <br><input type="text" id="escolhida" value="">
+            <button type="button" onclick="resp()">RESPONDER</button>
+            <p id="demo"></p>
+
+        </div>
+
+        <div align="right">
+            <button type="button" onclick="next()">Próxima questão</button>
+        </div>
+
+        <script>
+            var page = 1;
+            var res = page-1;
+            var score = 0;
+            var answer = [ "Quebec.txt", "Romenia.txt", "Iran.txt", "Armenia.txt", "Etiopia.txt"];
+
+            function resp() {
+
+                var x = document.getElementById("escolhida").value;
+                document.getElementById("demo").innerHTML = x;
+
+                if( ( (x == "C"||x == "c") && page == 1)||
+                    ( (x == "B"||x == "b") && page == 2)||
+                    ( (x == "A"||x == "a") && page == 3)||
+                    ( (x == "D"||x == "d") && page == 4)||
+                    ( (x == "A"||x == "a") && page == 5)
+                ){ score++; }
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("content").innerHTML =
+                    this.responseText;
+                    }
+                };
+                xhttp.open("GET", answer[res], true);
+                xhttp.send();
+            }
+
+
+            function next() {
+                page++;
+                res++;
+                if(page < 6){
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("content").innerHTML =
+                        this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", `pagina${page}.html`, true);
+                    xhttp.send();
+                }else{
+                    window.location.href = "pagina6.html? " + score;
+
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("body").innerHTML =
+                        this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", `pagina${page}.html`, true);
+                    xhttp.send();
+                }
+            }
+        </script>
+
+
+    </body>
+</html>
